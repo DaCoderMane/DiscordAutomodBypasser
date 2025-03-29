@@ -179,7 +179,7 @@
     
             sendMessage(channel_id, modifiedMessage);
         } else {
-            alert('Please input text to bypass..');
+            console.log("Please input text to bypass..");
         }
     });
 
