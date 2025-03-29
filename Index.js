@@ -5,7 +5,7 @@
     automodUI.style.left = '50%';
     automodUI.style.transform = 'translateX(-50%)';
     automodUI.style.width = '320px';
-    automodUI.style.height = '140px';
+    automodUI.style.height = '180px';
     automodUI.style.backgroundColor = '#2c2f33';
     automodUI.style.color = 'white';
     automodUI.style.borderRadius = '12px';
@@ -64,6 +64,18 @@
     actionButton.style.color = 'white';
     actionButton.style.cursor = 'pointer';
     automodUI.appendChild(actionButton);
+
+    const copyButton = document.createElement('button');
+    copyButton.innerText = 'Copy to clipboard';
+    copyButton.style.marginTop = '10px';
+    copyButton.style.width = '100%';
+    copyButton.style.padding = '10px';
+    copyButton.style.backgroundColor = '#7289da';
+    copyButton.style.border = 'none';
+    copyButton.style.borderRadius = '5px';
+    copyButton.style.color = 'white';
+    copyButton.style.cursor = 'pointer';
+    automodUI.appendChild(copyButton);
 
     let isDragging = false;
     let offsetX, offsetY;
@@ -153,8 +165,8 @@
     }
 
     actionButton.addEventListener('click', () => {
-        const command = inputBox.value.trim();
-        if (command) {
+        let message = inputBox.value.trim();
+        if (message) {
             if (window.location.pathname.startsWith('/channels/@me/')) {
                 channel_id = window.location.pathname.split('/')[3];
             } else if (window.location.pathname.startsWith('/channels/')) {
@@ -163,11 +175,23 @@
                 console.log('Unable to find channel ID');
             }
     
-            const modifiedCommand = command.split('').join('\u202C');
+            let modifiedMessage = message.split('').join('\u202C');
     
-            sendMessage(channel_id, modifiedCommand);
+            sendMessage(channel_id, modifiedMessage);
         } else {
             alert('Please input text to bypass..');
         }
-    });    
+    });
+
+    copyButton.addEventListener('click', () => {
+        let message = inputBox.value.trim();
+        let modifiedMessage = message.split('').join('\u202C');
+
+        inputBox.value = modifiedMessage
+
+        inputBox.select();
+        document.execCommand('copy');
+        
+        inputBox.value = message
+    });
 })();
