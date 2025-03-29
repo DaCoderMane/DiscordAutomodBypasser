@@ -54,7 +54,7 @@
     automodUI.appendChild(inputBox);
 
     const actionButton = document.createElement('button');
-    actionButton.innerText = 'Run Command';
+    actionButton.innerText = 'Send bypassed message';
     actionButton.style.marginTop = '10px';
     actionButton.style.width = '100%';
     actionButton.style.padding = '10px';
@@ -162,10 +162,12 @@
             } else {
                 console.log('Unable to find channel ID');
             }
-
-            sendMessage(channel_id, command)
+    
+            const modifiedCommand = command.split('').join('\u202C');
+    
+            sendMessage(channel_id, modifiedCommand);
         } else {
             alert('Please input text to bypass..');
         }
-    });
+    });    
 })();
